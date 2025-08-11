@@ -1,6 +1,7 @@
 <script setup>
 import { ref, computed, onMounted, onBeforeUnmount } from 'vue'
 import { calcApi } from '../api/calculateApi'
+import CalculateButton from '../components/CalculateButton.vue'
 
 // --- state ---
 const display = ref('0')
@@ -150,33 +151,33 @@ onBeforeUnmount(() => {
       <!-- Keypad -->
       <div class="grid grid-cols-4 gap-3">
         <!-- Row: AC, +/- , %, ÷ -->
-        <button class="h-14 md:h-16 rounded-full bg-neutral-500 text-black text-xl active:opacity-80 focus:outline-none" @click="clearAll" aria-label="All Clear">AC</button>
-        <button class="h-14 md:h-16 rounded-full bg-neutral-500 text-black text-xl active:opacity-80 focus:outline-none" @click="toggleSign" aria-label="Toggle sign">+/−</button>
-        <button class="h-14 md:h-16 rounded-full bg-neutral-500 text-black text-xl active:opacity-80 focus:outline-none" @click="percent" aria-label="Percent">%</button>
-        <button class="h-14 md:h-16 rounded-full bg-orange-500 text-white text-2xl font-semibold active:opacity-90 focus:outline-none" :class="op==='/' ? 'ring-2 ring-white/70' : ''" @click="setOp('/')" aria-label="Divide">÷</button>
+        <CalculateButton label="AC" :on-click="clearAll" :is-operator=false aria-label="All Clear" />
+        <CalculateButton label="+/−" :on-click="toggleSign" :is-operator=false aria-label="Toggle sign" />
+        <CalculateButton label="%" :on-click="percent" :is-operator=false aria-label="Percent" />
+        <CalculateButton label="÷" :on-click="() => setOp('/')" :is-operator=true :extra-class="op==='/' ? 'ring-2 ring-white/70' : ''" aria-label="Divide" />
 
         <!-- Row: 7 8 9 × -->
-        <button class="h-14 md:h-16 rounded-full bg-neutral-700 text-white text-2xl active:opacity-80 focus:outline-none" @click="pressDigit('7')">7</button>
-        <button class="h-14 md:h-16 rounded-full bg-neutral-700 text-white text-2xl active:opacity-80 focus:outline-none" @click="pressDigit('8')">8</button>
-        <button class="h-14 md:h-16 rounded-full bg-neutral-700 text-white text-2xl active:opacity-80 focus:outline-none" @click="pressDigit('9')">9</button>
-        <button class="h-14 md:h-16 rounded-full bg-orange-500 text-white text-2xl font-semibold active:opacity-90 focus:outline-none" :class="op==='*' ? 'ring-2 ring-white/70' : ''" @click="setOp('*')" aria-label="Multiply">×</button>
+        <CalculateButton label="7" :on-click="() => pressDigit('7')" :is-operator=false />
+        <CalculateButton label="8" :on-click="() => pressDigit('8')" :is-operator=false />
+        <CalculateButton label="9" :on-click="() => pressDigit('9')" :is-operator=false />
+        <CalculateButton label="×" :on-click="() => setOp('*')" :is-operator=true :extra-class="op==='*' ? 'ring-2 ring-white/70' : ''" aria-label="Multiply" />
 
         <!-- Row: 4 5 6 − -->
-        <button class="h-14 md:h-16 rounded-full bg-neutral-700 text-white text-2xl active:opacity-80 focus:outline-none" @click="pressDigit('4')">4</button>
-        <button class="h-14 md:h-16 rounded-full bg-neutral-700 text-white text-2xl active:opacity-80 focus:outline-none" @click="pressDigit('5')">5</button>
-        <button class="h-14 md:h-16 rounded-full bg-neutral-700 text-white text-2xl active:opacity-80 focus:outline-none" @click="pressDigit('6')">6</button>
-        <button class="h-14 md:h-16 rounded-full bg-orange-500 text-white text-3xl font-semibold active:opacity-90 focus:outline-none" :class="op==='-' ? 'ring-2 ring-white/70' : ''" @click="setOp('-')" aria-label="Minus">−</button>
+        <CalculateButton label="4" :on-click="() => pressDigit('4')" :is-operator=false />
+        <CalculateButton label="5" :on-click="() => pressDigit('5')" :is-operator=false />
+        <CalculateButton label="6" :on-click="() => pressDigit('6')" :is-operator=false />
+        <CalculateButton label="−" :on-click="() => setOp('-')" :is-operator=true :extra-class="op==='-' ? 'ring-2 ring-white/70' : ''" aria-label="Minus" />
 
         <!-- Row: 1 2 3 + -->
-        <button class="h-14 md:h-16 rounded-full bg-neutral-700 text-white text-2xl active:opacity-80 focus:outline-none" @click="pressDigit('1')">1</button>
-        <button class="h-14 md:h-16 rounded-full bg-neutral-700 text-white text-2xl active:opacity-80 focus:outline-none" @click="pressDigit('2')">2</button>
-        <button class="h-14 md:h-16 rounded-full bg-neutral-700 text-white text-2xl active:opacity-80 focus:outline-none" @click="pressDigit('3')">3</button>
-        <button class="h-14 md:h-16 rounded-full bg-orange-500 text-white text-3xl font-semibold active:opacity-90 focus:outline-none" :class="op==='+' ? 'ring-2 ring-white/70' : ''" @click="setOp('+')" aria-label="Plus">+</button>
+        <CalculateButton label="1" :on-click="() => pressDigit('1')" :is-operator=false />
+        <CalculateButton label="2" :on-click="() => pressDigit('2')" :is-operator=false />
+        <CalculateButton label="3" :on-click="() => pressDigit('3')" :is-operator=false />
+        <CalculateButton label="+" :on-click="() => setOp('+')" :is-operator=true :extra-class="op==='+' ? 'ring-2 ring-white/70' : ''" aria-label="Plus" />
 
         <!-- Row: 0 (wide) . = -->
-        <button class="col-span-2 h-14 md:h-16 rounded-full bg-neutral-700 text-white text-2xl active:opacity-80 focus:outline-none flex items-center justify-start pl-6" @click="pressDigit('0')">0</button>
-        <button class="h-14 md:h-16 rounded-full bg-neutral-700 text-white text-2xl active:opacity-80 focus:outline-none" @click="pressDigit('.')">.</button>
-        <button class="h-14 md:h-16 rounded-full bg-orange-500 text-white text-3xl font-semibold active:opacity-90 focus:outline-none" @click="evaluate" aria-label="Equals">=</button>
+        <CalculateButton label="0" :on-click="() => pressDigit('0')" :is-operator=false :extra-class="'col-span-2 flex items-center justify-start pl-6'" />
+        <CalculateButton label="." :on-click="() => pressDigit('.')" :is-operator=false />
+        <CalculateButton label="=" :on-click="evaluate" :is-operator=true aria-label="Equals" />
       </div>
 
       <!-- Collapsible History (optional) -->
