@@ -74,10 +74,9 @@ function setOp(nextOp) {
     evaluate().catch(() => {}) // best-effort chain
   } else {
     prev.value = Number(display.value)
-    display.value = '0'
   }
   op.value = nextOp
-  justEvaluated.value = false
+  justEvaluated.value = true
 }
 
 async function evaluate() {
