@@ -17,7 +17,7 @@ class CalculateService:
     def _now_ms(self) -> int:
         return int(time.time() * 1000)
 
-    def _save_ok(self, expression: str, result: float) -> Dict[str, Any]:
+    def _save_ok(self, expression: str, result) -> Dict[str, Any]:
         entry = {
             "id": str(uuid.uuid4()),
             "expression": expression,
@@ -38,19 +38,19 @@ class CalculateService:
         return self.repo.save(entry)
 
     # -------- operations --------
-    def add(self, num1: float, num2: float) -> Dict[str, Any]:
+    def add(self, num1, num2) -> Dict[str, Any]:
         res = num1 + num2
         return self._save_ok(f"{num1} + {num2}", res)
 
-    def subtract(self, num1: float, num2: float) -> Dict[str, Any]:
+    def subtract(self, num1, num2) -> Dict[str, Any]:
         res = num1 - num2
         return self._save_ok(f"{num1} - {num2}", res)
 
-    def multiply(self, num1: float, num2: float) -> Dict[str, Any]:
+    def multiply(self, num1, num2) -> Dict[str, Any]:
         res = num1 * num2
         return self._save_ok(f"{num1} * {num2}", res)
 
-    def divide(self, num1: float, num2: float) -> Dict[str, Any]:
+    def divide(self, num1, num2) -> Dict[str, Any]:
         if num2 == 0:
             # Persist the failed attempt, then raise for controller to 400 it
             self._save_err(f"{num1} / {num2}", "division by zero")
