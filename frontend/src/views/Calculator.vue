@@ -11,12 +11,6 @@ const justEvaluated = ref(false)
 const history = ref([])
 const showHistory = ref(false)
 
-const ops = [
-  { label: '÷', val: '/' },
-  { label: '×', val: '*' },
-  { label: '−', val: '-' },
-  { label: '+', val: '+' },
-]
 
 // secondary line shows previous + operator
 const secondary = computed(() => {
