@@ -9,5 +9,4 @@ class Config:
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
     # CORS configuration (allow Vue dev server on localhost:5173 by default)
-    CORS_ORIGINS = os.getenv("CORS_ORIGINS", "http://localhost:5173")
-    CORS_RESOURCES = {r"/api/*": {"origins": CORS_ORIGINS}}
+    CORS_ORIGIN = os.getenv("CORS_ORIGIN", "http://localhost:5173")
