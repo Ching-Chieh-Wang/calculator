@@ -134,15 +134,20 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-  <div class="min-h-screen bg-black text-white p-4">
-    <div class="mx-auto max-w-sm">
+  <div class="min-h-screen w-screen flex items-center justify-center bg-black text-white p-4 lg:p-8">
+    <div class="mx-auto w-full max-w-[min(95vw,40rem)]  h-full flex flex-col justify-center">
       <!-- Display -->
-      <div class="pt-8 pb-4 text-right">
-        <div class="text-7xl leading-none font-light font-mono tabular-nums select-text">{{ display }}</div>
+      <div class="pt-8 pb-4 text-right flex-1 flex items-end justify-end">
+        <div
+          class="leading-none font-light font-mono tabular-nums select-text text-4xl md:text-7xl  max-w-full overflow-hidden text-ellipsis break-words"
+          style="word-break: break-all;"
+        >
+          {{ display.length > 10 ? display.slice(0, 10) : display }}
+        </div>
       </div>
 
       <!-- Keypad -->
-      <div class="grid grid-cols-4 gap-3">
+      <div class="grid grid-cols-4 gap-3 lg:gap-4 lg:grid-rows-5 lg:auto-rows-fr flex-grow">
         <!-- Row: AC, +/- , %, ÷ -->
         <CalculateButton label="AC" :on-click="clearAll" :is-operator=false aria-label="All Clear" />
         <CalculateButton label="+/−" :on-click="toggleSign" :is-operator=false aria-label="Toggle sign" />
@@ -168,7 +173,7 @@ onBeforeUnmount(() => {
         <CalculateButton label="+" :on-click="() => setOp('+')" :is-operator=true :extra-class="op==='+' ? 'ring-2 ring-white/70' : ''" aria-label="Plus" />
 
         <!-- Row: 0 (wide) . = -->
-        <CalculateButton label="0" :on-click="() => pressDigit('0')" :is-operator=false :extra-class="'col-span-2 flex items-center justify-start pl-6'" />
+        <CalculateButton label="0" :on-click="() => pressDigit('0')" :is-operator=false :extra-class="'col-span-2 flex   pl-6'" />
         <CalculateButton label="." :on-click="() => pressDigit('.')" :is-operator=false />
         <CalculateButton label="=" :on-click="evaluate" :is-operator=true aria-label="Equals" />
       </div>
